@@ -2,183 +2,207 @@
 
 ## Overview | 개요
 
-This repository contains **technical documentation created through GPT-assisted static analysis of source code implemented in GitHub repositories**.
+This repository contains **code-based technical documentation derived from actual source-code implementations** maintained across GitHub repositories.
 
-이 저장소는 **GitHub Repository에 구현된 소스 코드를 GPT 기반으로 정적 분석(Static Analysis)하여 작성한 기술 문서**를 관리합니다.
+이 저장소는 GitHub Repository에 실제로 구현된 소스 코드를 기반으로 작성한 **Code-Based Technical Documentation(코드 기반 기술 문서)**을 통합 관리합니다.
 
-The documentation is derived from actual implementations and analyzes source code, project structures, configurations, dependencies, components, modules, classes, and their relationships to describe the architecture and technical characteristics of each project.
+The documents provide technical evidence of implemented systems by describing their architecture, component and module structures, processing flows, implementation decisions, technical requirements, limitations, and improvement opportunities.
 
-기술 문서는 실제 구현을 기반으로 소스 코드, 프로젝트 구조, 설정, 의존성, 컴포넌트, 모듈, 클래스 및 상호 관계를 분석하여 각 프로젝트의 아키텍처와 기술적 특성을 설명합니다.
+각 문서는 구현된 시스템의 **아키텍처, 컴포넌트 및 모듈 구조, 처리 흐름, 구현 및 설계 결정, 기술 요구사항, 한계 및 개선 사항**을 분석하여 실제 구현에 대한 기술적 근거를 제공합니다.
 
-The scope is not limited to a specific framework or technology. It may cover **Software Engineering, Application Architecture, Backend Engineering, AI, Deep Learning, Machine Learning, LLM, RAG, and related engineering technologies**.
+The documentation covers multiple engineering domains, including **Software Architecture, Backend Engineering, AI, Deep Learning, Machine Learning, LLM, RAG, and related technologies**.
 
-문서 범위는 특정 프레임워크나 기술에 한정되지 않으며, **Software Engineering, Application Architecture, Backend Engineering, AI, Deep Learning, Machine Learning, LLM, RAG 및 관련 엔지니어링 기술**을 포함할 수 있습니다.
+문서의 기술 범위는 특정 프레임워크에 한정되지 않으며 **Software Architecture, Backend Engineering, AI, Deep Learning, Machine Learning, LLM, RAG 및 관련 엔지니어링 기술**을 포함합니다.
 
 ---
 
 ## Purpose | 목적
 
-The primary purpose of this repository is to maintain structured technical documentation for source-code projects stored in separate GitHub repositories.
+The purpose of this repository is to provide **technical evidence and architectural documentation for implemented software projects**, including projects whose complete source code is not publicly disclosed.
 
-이 저장소의 주요 목적은 개별 GitHub Repository에서 관리되는 소스 코드 프로젝트에 대한 **구조화된 기술 문서를 통합 관리**하는 것입니다.
+이 저장소의 목적은 실제 구현된 소프트웨어 프로젝트에 대한 **기술적 구현 근거와 아키텍처 문서**를 제공하는 것입니다. 전체 소스 코드가 공개되지 않은 프로젝트도 문서화 대상에 포함됩니다.
 
-GPT is used to perform **static analysis of available source code and project artifacts**. Based on the analysis, the documentation describes and evaluates:
+Each document is intended to demonstrate not only **what was implemented**, but also **how the implementation is structured, how components interact, which technical decisions were made, and how the implementation aligns with official technical references**.
 
-GPT를 활용하여 **소스 코드와 프로젝트 산출물을 정적 분석**하고, 분석 결과를 기반으로 다음 항목을 기술하고 평가합니다.
+각 기술 문서는 단순히 **무엇을 구현했는지**만 나열하지 않고, **어떤 구조로 구현했는지, 컴포넌트가 어떻게 상호작용하는지, 어떤 기술적 설계 결정을 적용했는지, 구현 내용이 공식 기술 Reference와 어떻게 대응되는지**를 설명합니다.
 
-* **System and Application Architecture** — 시스템 및 애플리케이션 아키텍처
-* **Project and Module Structure** — 프로젝트 및 모듈 구조
-* **Components, Classes, and Relationships** — 컴포넌트, 클래스 및 상호 관계
-* **Request, Processing, and Data Flow** — 요청, 처리 및 데이터 흐름
-* **Framework and Library Integration** — 프레임워크 및 라이브러리 연동
-* **Configuration and Dependency Structure** — 설정 및 의존성 구조
-* **Design and Implementation Patterns** — 설계 및 구현 패턴
-* **Implemented Functionality** — 구현된 기능
-* **Technical Limitations and Potential Issues** — 기술적 한계 및 잠재적 문제점
-* **Improvement Opportunities** — 개선 가능 사항
-* **Architecture and Implementation Summary** — 아키텍처 및 구현 요약
+---
+
+## Documentation Principles | 문서 작성 원칙
+
+The documentation follows four primary principles.
+
+기술 문서는 다음 네 가지 원칙을 기준으로 작성합니다.
+
+### 1. Implementation-Based | 실제 구현 기반
+
+Technical descriptions are derived from actual source code, project configuration, dependency definitions, and related implementation artifacts.
+
+기술적 설명은 실제 **소스 코드, 프로젝트 설정, 의존성 정의 및 관련 구현 산출물**을 근거로 작성합니다.
+
+Architecture descriptions are not treated as implemented functionality unless corresponding implementation evidence can be identified.
+
+구현 근거를 확인할 수 없는 아키텍처 또는 기능은 실제 구현된 것으로 간주하지 않습니다.
+
+### 2. Traceable | 추적 가능성
+
+Technical findings should be traceable to identifiable implementation elements such as modules, packages, classes, configuration, APIs, pipelines, or dependencies.
+
+기술 분석 결과는 **모듈, 패키지, 클래스, 설정, API, Pipeline 또는 Dependency** 등 실제 구현 요소와 연결하여 추적할 수 있도록 구성합니다.
+
+### 3. Reference-Based | 공식 Reference 기반
+
+Where applicable, implementations are analyzed against official framework documentation, API references, architectural concepts, and established engineering practices.
+
+필요한 경우 구현 내용을 **공식 Framework Documentation, API Reference, Architecture Concept 및 확립된 Engineering Practice**와 비교하여 분석합니다.
+
+### 4. Verification-Aware | 검증 범위 구분
+
+Static analysis and runtime verification are treated separately.
+
+**Static Analysis(정적 분석)**과 **Runtime Verification(실행 기반 검증)**의 범위를 구분합니다.
+
+Behavior that requires application execution, integration testing, performance measurement, monitoring, or external infrastructure verification is not considered verified solely through static source-code analysis.
+
+애플리케이션 실행, 통합 테스트, 성능 측정, 모니터링 또는 외부 인프라 확인이 필요한 항목은 소스 코드 정적 분석만으로 검증된 것으로 판단하지 않습니다.
 
 ---
 
 ## Analysis Methodology | 분석 방법론
 
-The technical documents are produced through a **code-based static analysis process**.
+Technical documents are produced using a **source-code-driven analysis process**.
 
-기술 문서는 **소스 코드 기반 정적 분석(Code-Based Static Analysis)**을 통해 작성됩니다.
+기술 문서는 **Source-Code-Driven Analysis(소스 코드 중심 분석)** 방식으로 작성합니다.
 
 ### Analysis Flow | 분석 흐름
 
-**GitHub Source Repository
-→ GPT-Assisted Static Analysis
+**Source Code
+→ Static Analysis
 → Architecture & Implementation Analysis
-→ Reference-Based Evaluation
+→ Reference Validation
 → Technical Documentation**
 
-**GitHub 소스 Repository
-→ GPT 기반 정적 분석
+**소스 코드
+→ 정적 분석
 → 아키텍처 및 구현 분석
-→ 공식 Reference 기반 평가
-→ 기술 문서 작성**
+→ 공식 Reference 기반 검증
+→ 기술 문서**
 
-Static analysis may examine:
+The analysis may examine:
 
-정적 분석에서는 다음 항목을 분석할 수 있습니다.
+분석 대상에는 다음 항목이 포함될 수 있습니다.
 
-* Source-code structure — 소스 코드 구조
-* Package and module organization — 패키지 및 모듈 구성
-* Class definitions and relationships — 클래스 정의 및 관계
-* Inheritance, composition, and dependencies — 상속, 구성 및 의존 관계
-* Framework configuration — 프레임워크 설정
-* Build and dependency definitions — 빌드 및 의존성 정의
-* Application configuration — 애플리케이션 설정
-* Security configuration — 보안 설정
-* Persistence and data-access structures — 영속성 및 데이터 접근 구조
-* API and application entry points — API 및 애플리케이션 진입점
-* Training and inference pipelines — 학습 및 추론 파이프라인
-* AI/ML model-related implementation — AI/ML 모델 관련 구현
-* Infrastructure and deployment configuration — 인프라 및 배포 설정
-
-Because the analysis is static, conclusions are limited to information that can be verified from the analyzed source code and related project artifacts.
-
-정적 분석을 기반으로 하므로 분석 결과는 **소스 코드 및 관련 프로젝트 산출물에서 확인할 수 있는 범위**로 제한됩니다.
-
-Runtime behavior that cannot be established through static analysis is not treated as verified implementation behavior.
-
-정적 분석만으로 확인할 수 없는 Runtime 동작은 검증된 구현 동작으로 간주하지 않습니다.
+* **Repository / Project Structure** — Repository 및 프로젝트 구조
+* **Package / Module Structure** — 패키지 및 모듈 구조
+* **Component / Class Relationships** — 컴포넌트 및 클래스 관계
+* **Inheritance / Composition / Dependencies** — 상속, 구성 및 의존 관계
+* **Application Configuration** — 애플리케이션 설정
+* **Framework Configuration** — 프레임워크 설정
+* **Build / Dependency Configuration** — 빌드 및 의존성 설정
+* **API / Application Entry Points** — API 및 애플리케이션 진입점
+* **Request / Response Flow** — 요청 및 응답 흐름
+* **Data Processing Flow** — 데이터 처리 흐름
+* **Security Architecture** — 보안 아키텍처
+* **Persistence Architecture** — 영속성 아키텍처
+* **Training / Validation / Inference Pipeline** — 학습, 검증 및 추론 Pipeline
+* **AI / ML Model Integration** — AI/ML 모델 통합
+* **Infrastructure / Deployment Configuration** — 인프라 및 배포 설정
 
 ---
 
-## Reference-Based Technical Analysis | 공식 Reference 기반 기술 분석
+## AI-Assisted Analysis | AI 보조 분석
 
-Where applicable, implementations are evaluated against:
+AI-assisted analysis may be used to support **source-code inspection, structural analysis, architecture identification, reference comparison, and technical-document preparation**.
 
-필요한 경우 구현 내용을 다음 자료와 비교하여 기술적으로 분석합니다.
+AI 기반 분석은 **소스 코드 검토, 구조 분석, 아키텍처 식별, 공식 Reference 비교 및 기술 문서 작성**을 보조하는 수단으로 활용할 수 있습니다.
 
-* **Official Framework Documentation** — 공식 프레임워크 문서
-* **Official API References** — 공식 API Reference
-* **Reference Architectures** — Reference Architecture
-* **Framework Conventions** — 프레임워크 표준 및 관례
-* **Established Engineering Practices** — 일반적으로 확립된 엔지니어링 Practice
+AI-generated analysis is not considered implementation evidence by itself. Technical conclusions should be based on identifiable source-code or project artifacts and, where applicable, validated against official technical references.
 
-For example, a Spring Boot application may be analyzed by comparing the implemented source code with the official Spring Boot and Spring Framework references.
-
-예를 들어 Spring Boot Application은 실제 구현 소스 코드를 **Spring Boot 및 Spring Framework 공식 Reference**와 비교하여 아키텍처와 구현을 분석할 수 있습니다.
-
-AI and ML projects may similarly be analyzed against official documentation and architectural concepts provided by the frameworks and libraries used by the implementation.
-
-AI 및 ML 프로젝트 역시 구현에 사용된 프레임워크와 라이브러리의 **공식 문서 및 아키텍처 개념**을 기준으로 분석할 수 있습니다.
+AI 분석 결과 자체를 구현의 근거로 간주하지 않습니다. 기술적 결론은 식별 가능한 **소스 코드 또는 프로젝트 산출물**을 근거로 하며, 필요한 경우 공식 기술 Reference를 통해 검증합니다.
 
 ---
 
-## Documentation Scope | 문서 범위
+## Technical Analysis Scope | 기술 분석 범위
 
-| Area / 영역                 | Examples / 주요 내용                                                                                           |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **Software Architecture** | Application Architecture, Layered Architecture, Component Design / 애플리케이션 아키텍처, 계층형 아키텍처, 컴포넌트 설계          |
-| **Backend Engineering**   | Spring Boot, Web Architecture, Security, Persistence / Spring Boot, Web 아키텍처, 보안, 영속성                      |
-| **Deep Learning**         | PyTorch, Training Architecture, Model Training Pipeline / PyTorch, 학습 아키텍처, 모델 학습 파이프라인                    |
-| **Machine Learning**      | ML Pipeline, Data Processing, Model Evaluation / ML 파이프라인, 데이터 처리, 모델 평가                                   |
-| **LLM Engineering**       | LLM Integration, Fine-Tuning, PEFT, LoRA / LLM 통합, Fine-Tuning, PEFT, LoRA                                 |
-| **RAG**                   | Chunking, Embedding, Vector Database, Hybrid Search, Reranking / 청킹, 임베딩, 벡터 데이터베이스, 하이브리드 검색, 리랭킹         |
-| **AI Systems**            | AI Application Architecture, Inference Pipeline, Agent Architecture / AI 애플리케이션 아키텍처, 추론 파이프라인, Agent 아키텍처 |
-| **Infrastructure**        | Docker, Deployment Architecture, Runtime Configuration / Docker, 배포 아키텍처, Runtime 설정                       |
-
----
-
-## Documentation Classification | 문서 분석 결과 분류
-
-To distinguish verified implementations from architectural requirements and recommendations, findings may be classified as follows:
-
-실제 구현 여부와 아키텍처 요구사항 및 개선 권고를 명확하게 구분하기 위해 분석 결과를 다음과 같이 분류할 수 있습니다.
-
-| Classification                        | 한국어           | Definition / 정의                                                                                                                 |
-| ------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **Implemented**                       | 구현됨           | Confirmed by analyzed source code or project artifacts / 분석된 소스 코드 또는 프로젝트 산출물에서 구현이 확인됨                                        |
-| **Required**                          | 필수            | Required by the defined architecture or implementation requirements / 정의된 아키텍처 또는 구현 요구사항에 필요한 항목                               |
-| **Recommended**                       | 권장            | Improvement recommended based on official references or engineering practices / 공식 Reference 또는 엔지니어링 Practice를 근거로 개선을 권장하는 항목 |
-| **Not Implemented**                   | 미구현           | Functionality not identified in the analyzed source code / 분석 대상 소스 코드에서 구현을 확인하지 못한 항목                                         |
-| **Not Verifiable by Static Analysis** | 정적 분석으로 검증 불가 | Requires runtime execution, testing, monitoring, or environment verification / Runtime 실행, 테스트, 모니터링 또는 실행 환경 검증이 필요한 항목        |
+| Engineering Area / 기술 영역  | Analysis Scope / 분석 범위                                                                                              |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **Software Architecture** | Application Architecture, Layered Architecture, Component Design / 애플리케이션 아키텍처, 계층 구조, 컴포넌트 설계                      |
+| **Backend Engineering**   | Spring Boot, Web Architecture, Security, Persistence / Spring Boot, Web 아키텍처, 보안, 영속성                               |
+| **Deep Learning**         | PyTorch, Trainer Architecture, Training Pipeline / PyTorch, Trainer 아키텍처, 학습 Pipeline                               |
+| **Machine Learning**      | ML Pipeline, Data Processing, Model Evaluation / ML Pipeline, 데이터 처리, 모델 평가                                         |
+| **LLM Engineering**       | Model Integration, Fine-Tuning, PEFT, LoRA / 모델 통합, Fine-Tuning, PEFT, LoRA                                         |
+| **RAG**                   | Chunking, Embedding, Vector DB, Hybrid Search, Reranking / Chunking, Embedding, Vector DB, Hybrid Search, Reranking |
+| **AI Systems**            | AI Application Architecture, Inference Pipeline, Agent Architecture / AI 애플리케이션 아키텍처, 추론 Pipeline, Agent 아키텍처       |
+| **Infrastructure**        | Containerization, Deployment Architecture, Runtime Configuration / Container, 배포 아키텍처, Runtime 설정                   |
 
 ---
 
-## Relationship to Source Repositories | 소스 Repository와의 관계
+## Technical Finding Classification | 기술 분석 결과 분류
 
-Source code remains in its respective GitHub repository.
+Technical findings are classified according to their implementation and verification status.
 
-실제 소스 코드는 각각의 GitHub Repository에서 관리됩니다.
+기술 분석 결과는 구현 및 검증 상태에 따라 다음과 같이 구분합니다.
 
-This repository acts as a **centralized technical-documentation repository containing GPT-assisted, code-based technical analyses of those implementations**.
+| Classification                    | 구분            | Definition / 정의                                                                                                                        |
+| --------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **Implemented**                   | 구현            | Implementation confirmed in source code or project artifacts / 소스 코드 또는 프로젝트 산출물에서 구현 확인                                               |
+| **Required**                      | 필수            | Required by the architecture, framework, or defined implementation requirements / 아키텍처, 프레임워크 또는 정의된 구현 요구사항에 필요한 항목                   |
+| **Recommended**                   | 권장            | Improvement recommended based on technical references or engineering practices / 기술 Reference 또는 Engineering Practice를 근거로 개선을 권장하는 항목 |
+| **Not Implemented**               | 미구현           | Implementation not identified in the analyzed source code / 분석된 소스 코드에서 구현을 확인하지 못한 항목                                                 |
+| **Runtime Verification Required** | Runtime 검증 필요 | Requires execution, testing, monitoring, or environment verification / 실행, 테스트, 모니터링 또는 환경 검증이 필요한 항목                                  |
 
-이 저장소는 각 GitHub Repository의 구현 소스를 **GPT 기반으로 정적 분석하여 작성한 기술 문서를 통합 관리하는 Technical Documentation Repository** 역할을 합니다.
+---
 
-Each technical document identifies its corresponding source repository or project so that the relationship between **source code, static-analysis results, and technical documentation** can be traced.
+## Relationship to Source Repositories | Source Repository와의 관계
 
-각 기술 문서는 분석 대상 Source Repository 또는 Project를 명시하여 **소스 코드 → 정적 분석 → 기술 문서**의 관계를 추적할 수 있도록 구성합니다.
+Source code is maintained independently in its corresponding GitHub repository.
+
+실제 소스 코드는 각각의 GitHub Source Repository에서 독립적으로 관리합니다.
+
+This repository provides the corresponding **architecture and implementation documentation**, allowing technical analysis to be maintained separately from source-code repositories.
+
+이 저장소에서는 해당 프로젝트의 **아키텍처 및 구현 기술 문서**를 별도로 관리하여 소스 코드와 기술 분석 문서를 분리합니다.
+
+For projects whose source code is not publicly disclosed, the technical documentation provides an architectural and implementation-level description while preserving the confidentiality of the complete source code.
+
+전체 소스 코드를 공개하지 않는 프로젝트의 경우, 전체 코드의 비공개 상태를 유지하면서 **Architecture 및 Implementation Level의 기술적 구조와 구현 내용을 설명하는 자료**로 활용합니다.
 
 ---
 
 ## Document Structure | 문서 구성
 
-The exact structure may vary depending on the analyzed technology.
+A technical document may contain the following sections depending on the characteristics of the project.
 
-세부 문서 구조는 분석 대상 기술과 프로젝트의 특성에 따라 달라질 수 있습니다.
-
-A typical technical document may include:
-
-일반적인 기술 문서는 다음과 같이 구성할 수 있습니다.
+프로젝트와 기술의 특성에 따라 다음과 같은 구조로 기술 문서를 구성할 수 있습니다.
 
 1. **Introduction** — 소개
 2. **System Overview** — 시스템 개요
 3. **Architecture Overview** — 아키텍처 개요
-4. **Component or Module Architecture** — 컴포넌트 또는 모듈 아키텍처
-5. **Processing and Data Flow** — 처리 및 데이터 흐름
+4. **Component / Module Architecture** — 컴포넌트 및 모듈 아키텍처
+5. **Processing / Data Flow** — 처리 및 데이터 흐름
 6. **Implementation Analysis** — 구현 분석
 7. **Reference-Based Evaluation** — 공식 Reference 기반 평가
 8. **Technical Requirements** — 기술 요구사항
-9. **Issues and Limitations** — 문제점 및 한계
+9. **Issues / Limitations** — 문제점 및 한계
 10. **Improvement Recommendations** — 개선 권고사항
 11. **Architecture Summary** — 아키텍처 요약
 
-Technology-specific sections may be added for **Spring Boot, PyTorch, DL/ML pipelines, LLM systems, RAG architectures, and other engineering domains**.
+The structure may be extended with technology-specific analysis for **Spring Boot, PyTorch, DL/ML systems, LLM applications, RAG architectures, and other engineering technologies**.
 
-**Spring Boot, PyTorch, DL/ML Pipeline, LLM System, RAG Architecture 및 기타 엔지니어링 영역**에 대해서는 기술 특성에 맞는 별도의 세부 섹션을 추가할 수 있습니다.
+문서 구조는 **Spring Boot, PyTorch, DL/ML System, LLM Application, RAG Architecture 및 기타 엔지니어링 기술**의 특성에 따라 확장할 수 있습니다.
+
+---
+
+## Disclaimer | 분석 범위 및 제한
+
+The documents represent technical analysis based on the source code and project artifacts available at the time of analysis.
+
+기술 문서는 분석 시점에 확인 가능한 **소스 코드 및 프로젝트 산출물**을 기반으로 작성한 기술 분석 결과입니다.
+
+Static analysis cannot fully verify runtime behavior, production configuration, performance characteristics, external system behavior, or operational conditions.
+
+정적 분석만으로는 **Runtime 동작, Production 환경 설정, 성능 특성, 외부 시스템 동작 및 운영 환경**을 완전히 검증할 수 없습니다.
+
+Such areas require separate runtime testing, integration testing, performance evaluation, or operational verification.
+
+해당 영역은 별도의 **Runtime Test, Integration Test, Performance Evaluation 또는 Operational Verification**을 통해 검증해야 합니다.
