@@ -18,9 +18,9 @@ The documentation covers multiple engineering domains, including **Software Arch
 
 ## Purpose | 목적
 
-The purpose of this repository is to provide **technical evidence and architectural documentation for implemented software projects**, including projects whose complete source code is not publicly disclosed.
+The purpose of this repository is to provide **technical evidence and architectural documentation for a subset of implemented software projects**, including projects whose complete source code is not publicly disclosed.
 
-이 저장소의 목적은 실제 구현된 소프트웨어 프로젝트에 대한 **기술적 구현 근거와 아키텍처 문서**를 제공하는 것입니다. 전체 소스 코드가 공개되지 않은 프로젝트도 문서화 대상에 포함됩니다.
+이 저장소의 목적은 일부 실제 구현된 소프트웨어 프로젝트에 대한 **기술적 구현 근거와 아키텍처 문서**를 제공하는 것입니다. 전체 소스 코드가 공개되지 않은 프로젝트도 문서화 대상에 포함됩니다.
 
 Each document is intended to demonstrate not only **what was implemented**, but also **how the implementation is structured, how components interact, which technical decisions were made, and how the implementation aligns with official technical references**.
 
