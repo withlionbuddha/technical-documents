@@ -2,9 +2,9 @@
 
 ## Overview | 개요
 
-This repository contains **code-based technical documentation derived from actual source-code implementations** maintained across GitHub repositories.
+This repository contains **code-based technical documentation derived from actual source-code implementations** in a subset of GitHub repositories.
 
-이 저장소는 GitHub Repository에 실제로 구현된 소스 코드를 기반으로 작성한 **Code-Based Technical Documentation(코드 기반 기술 문서)**을 통합 관리합니다.
+이 저장소는 일부의 GitHub Repository에 실제로 구현된 소스 코드를 기반으로 작성한 **Code-Based Technical Documentation(코드 기반 기술 문서)**을 통합 관리합니다.
 
 The documents provide technical evidence of implemented systems by describing their architecture, component and module structures, processing flows, implementation decisions, technical requirements, limitations, and improvement opportunities.
 
