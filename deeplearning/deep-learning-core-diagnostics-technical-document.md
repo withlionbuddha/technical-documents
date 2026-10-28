@@ -3,7 +3,7 @@
 > **Source:** [withlionbuddha/deep-learning-core — ground](https://github.com/withlionbuddha/deep-learning-core/tree/ground/modules/diagnostics)  
 > **Analysis date:** 2026-10-28 · **Evidence level:** Source inspection (not runtime benchmark)
 
-## 1. Purpose — 핵심 기술 포인트
+## 1. Purpose — 구현 분석 대상
 
 이 문서는 `deep-learning-core`의 **모델 구조 탐색 → Inspector 등록 → 뉴런 Weight 선택 → 통계 계산 → 조건 기반 진단**을 구현 파일 단위로 추적한다. 모델의 최종 Accuracy가 아닌 **Weight Tensor와 뉴런별 연결 구조**를 분석하는 정적 진단 아키텍처가 대상이다.
 
@@ -44,7 +44,7 @@ SequentialLayerInspector
 - **Pre-primary Stage:** 첫 Primary Layer 이전에 나타난 Module
 - **LayerDefinition:** `layer_index`, `layer_name`, `layer_type`, `module`, `stages`
 
-**한계:** 모든 PyTorch Graph 또는 임의의 `nn.Module`을 분석하는 Graph Tracer가 아니다. `nn.Sequential` 내부의 구조적 순회에 한정한다.
+**구현 대상:** `nn.Sequential` 내부의 구조적 순회.
 
 ## 4. Inspector Registration — Supported Modules
 
@@ -78,12 +78,12 @@ SequentialLayerInspector
 
 `WeightDiagnostic.analyze(statistics)`는 네 가지 진단 결과를 반환한다.
 
-| Key | Decision Rule | Limitation |
-|---|---|---|
-| `zero_weights` | 모든 원소가 유한하고 `zero_ratio == 1.0` | Weight가 0이어도 Bias/Activation 결과가 0이라고 단정할 수 없음 |
-| `constant_weights` | 모두 유한하며 `std <= tolerance` (기본 `1e-12`) | 상수 Weight가 반드시 결함은 아님 |
-| `invalid_weights` | `nan_count > 0 or inf_count > 0` | 이상치의 원인을 설명하지는 않음 |
-| `weight_imbalance` | 양수/음수 비율 및 `abs(positive-negative)` | 부호 비율 차이 자체는 오류 판정이 아님 |
+| Key | Decision Rule |
+|---|---|
+| `zero_weights` | 모든 원소가 유한하고 `zero_ratio == 1.0` |
+| `constant_weights` | 모두 유한하며 `std <= tolerance` (기본 `1e-12`) |
+| `invalid_weights` | `nan_count > 0 or inf_count > 0` |
+| `weight_imbalance` | 양수/음수 비율 및 `abs(positive-negative)` |
 
 `small_weights` 및 `large_weights`는 `analyze()`의 기본 결과가 아니라 **호출자가 명시한 임계값**으로 별도 진단한다. 크기 임계값은 데이터·초기화·Layer 구조에 따라 달라지므로 절대적인 정상/비정상 기준이 아니다.
 
@@ -119,19 +119,18 @@ inspect_neuron(layer_index, neuron_index)
 ]
 ```
 
-**제약:** 이 메서드는 현재 **All-Zero Output Weights만 문제 뉴런으로 집계**한다. NaN/Inf, Gradient 이상, Activation 포화 등을 통합 판정하는 범용 문제 뉴런 탐지기로 기술하면 부정확하다.
+**구현된 판정 조건:** `all_zero_weights`.
 
 ### 7.2. Similarity & Input Contribution
 
-`OutputWeightInspector.inspect_neuron_similarity()`는 두 뉴런 Weight의 Cosine Similarity와 Euclidean Distance를 반환한다. 이는 **Weight의 기하학적 유사도**이며, 기능적 중복성이나 Pruning 가능성을 확정하지 않는다.
+`OutputWeightInspector.inspect_neuron_similarity()`는 두 뉴런 Weight의 Cosine Similarity와 Euclidean Distance를 반환한다. 계산 결과는 Weight 벡터 간 유사도 및 거리다.
 
 `inspect_input_contribution()`의 실제 실행 분기는 다음과 같다.
 
 - **Linear:** 입력 요소와 Weight의 곱, Weighted Sum, Bias, Pre-activation, 최대 절댓값 기여 연결 인덱스
 - **Bilinear:** 두 입력과 Weight의 항별 곱 및 합산
-- **Conv:** 현재 위치별 Unfold/Patch 기반 분석을 구현하지 않았고 `NotImplementedError`를 발생시킨다.
 
-또한 `inspect_connection_ablation()`은 **Linear에 한해** 지정 연결을 0으로 가정했을 때의 Pre-activation 변화를 계산한다. 모델 재학습 또는 전체 출력의 인과적 영향 평가와는 다르다.
+`inspect_connection_ablation()`은 `nn.Linear`에서 특정 입력 연결을 0으로 가정한 Pre-activation 차이를 계산한다.
 
 ## 8. TransformerModelAnalyzer — Static Estimates
 
@@ -142,7 +141,7 @@ inspect_neuron(layer_index, neuron_index)
 - `model.embedding.embedding.embedding_dim`
 - `model.context_length` 또는 `sequence_length` 또는 `max_sequence_length`
 
-이는 범용 Hugging Face Transformer Reflection API가 아니라 **특정 속성 계약을 요구하는 분석기**다.
+분석기는 위 모델 속성을 직접 참조한다.
 
 ### 8.1. Core Formulas
 
@@ -157,39 +156,15 @@ inspect_neuron(layer_index, neuron_index)
 
 여기서 `B`는 Batch Size, `S`는 Sequence Length, `E`는 Embedding Size, `H`는 Head Count, `V`는 Vocabulary Size다.
 
-**범위 주의:** Attention FLOPs는 구현된 수식에 한정되며 Q/K/V Projection, Softmax, Feed-forward Network 등의 전체 Transformer 연산량을 모두 포함한다고 주장할 수 없다. Memory Traffic도 주요 Tensor 크기의 합에 접근 배수를 곱한 **모형 기반 추정치**이지 장치의 실측 Memory Transaction이 아니다.
+**구현된 계산 범위:** 위 표의 Tensor 및 연산 항을 사용한 정적 추정.
 
 ### 8.2. Bandwidth Estimate
 
 `memory_bandwidth_usage()`는 추정 Traffic × Iterations/s를 GiB/s로 변환한다. `estimate_bandwidth_saturation_batch_size()`는 1부터 `maximum_batch_size`까지 순회하여 사용률 임계값에 최초 도달한 Batch Size를 반환한다.
 
-`bandwidth_utilization()`은 사용률을 `utilization_threshold`로 상한 제한하므로, 반환되는 값은 실제 장치 사용률의 독립적인 측정치가 아니다. 추천 Batch Size도 **지정된 가정 하의 모델 계산 결과**다.
+`bandwidth_utilization()`은 계산된 사용률을 `utilization_threshold`로 상한 제한한다.
 
-## 9. Findings — Verification Classification
-
-| Finding | Classification |
-|---|---|
-| Recursive `nn.Sequential` Layer Resolution | Implemented |
-| Supported Module 기반 OutputWeightInspector 자동 등록 | Implemented |
-| Neuron Weight Statistics 및 All-Zero 검출 | Implemented |
-| Weight Cosine Similarity / Euclidean Distance | Implemented |
-| Linear/Bilinear 입력 기여도 | Implemented |
-| Conv 위치별 입력 기여도 | Not Implemented |
-| `inspect_potential_redundancy()` | Not Implemented (removed API) |
-| `build_diagnostic_summary()` | Not Implemented (removed API) |
-| End-to-end 모델 정확도 개선 입증 | Runtime Verification Required |
-| GPU/XPU 메모리 대역폭 실측 입증 | Runtime Verification Required |
-
-## 10. Improvement Recommendations
-
-1. **Layer Contract:** 지원 Primary Module과 Inspector 지원 Module의 차이를 공개 API 문서에 명시한다.
-2. **Numerical Edge Cases:** NaN/Inf 포함 시 `finite_count` 기준 비율의 의미를 API 응답에 명시한다.
-3. **Neuron Diagnostics:** `get_problem_neurons()`에 향후 진단 유형을 확장할 때는 Rule별 Evidence를 독립적으로 기록한다.
-4. **Conv Attribution:** Patch/Unfold 기반 위치별 계산을 별도 구현·테스트한 후 지원한다고 선언한다.
-5. **Transformer Validation:** 실제 Allocated Memory 및 Profiling 결과와 정적 추정의 오차를 실험으로 비교한다.
-6. **Regression Tests:** Nested Sequential, Unsupported Module, All-Zero Neuron, NaN/Inf, Shape Mismatch, Batch/Sequence 경계값을 유지한다.
-
-## 11. Source Traceability
+## 9. Source Traceability
 
 - [SequentialLayerResolver](https://github.com/withlionbuddha/deep-learning-core/blob/ground/modules/diagnostics/resolvers/SequentialLayerResolver.py)
 - [SequentialLayerInspectorFactory](https://github.com/withlionbuddha/deep-learning-core/blob/ground/modules/diagnostics/factory/SequentailLayerFactory.py)
@@ -200,4 +175,3 @@ inspect_neuron(layer_index, neuron_index)
 - [WeightDiagnostic](https://github.com/withlionbuddha/deep-learning-core/blob/ground/modules/diagnostics/diagnostics/WeightDiagnostic.py)
 - [TransformerModelAnalyzer](https://github.com/withlionbuddha/deep-learning-core/blob/ground/modules/diagnostics/analyzer/TransformerModelAnalyzer.py)
 
-> **Verification note:** 이 문서는 Source-Level Implementation Evidence에 기반한다. 문서 작성 시점에 테스트 실행, Accelerator 실측, 실제 서비스 운영 검증은 수행하지 않았다.
